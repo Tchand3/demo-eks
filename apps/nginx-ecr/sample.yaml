@@ -1,1 +1,52 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlr-svc
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlr-svc
+  template:
+    metadata:
+      labels:
+        app: mlr-svc
+    spec:
+      containers:
+        - name: mlr-svc
+          image: 941377154345.dkr.ecr.us-east-1.amazonaws.com/aws-dev-service-new:48916
+          ports:
+            - containerPort: 8001
+          resources:
+            limits:
+              cpu: "1500m"
+              memory: "1500Mi"
+            requests:
+              cpu: "1500m"
+              memory: "1500Mi"
+          env:
+            - name: TITLE
+              value: "mlr-svc"
+            - name: API_VERSION
+              value: "0.2.0"
+            - name: BASE_PATH
+              value: "/api/mlr/apmlr"
+            - name: DEBUG
+              value: "true"
+            - name: DESCRIPTION
+              value: "MLR Service"
+            - name: ENT_API_TIMEOUT
+              value: "120"
+            - name: HOSTNAME
+              value: "https://deva.lionis.ai"
+            - name: MAX_FILE_SIZE
+              value: "100"
+            - name: MAX_FILE_SIZE_CSV
+              value: "100"
+            - name: TAXONOMY_VALIDATION_FLAG
+              value: "True"
+            - name: INGEST_DETAILED_ERROR
+              value: "True"
+            - name: FLAG_IS_SHOW_IO_JSON
+              value: "False"
